@@ -526,6 +526,7 @@ GameObject:
   - component: {fileID: 1718109450}
   - component: {fileID: 1718109445}
   - component: {fileID: 1718109444}
+  - component: {fileID: 1718109451}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -547,7 +548,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &1718109445
 MonoBehaviour:
@@ -633,7 +634,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1718109443}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.54, y: 5.18, z: 1.35}
+  m_LocalPosition: {x: 1.64, y: 1.58, z: 1.35}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -652,11 +653,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40f0a9062fea6464db8d62fec0bdc7bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 0
-  runSpeed: 0
-  airSpeed: 0
-  jumpSpeed: 0
+  walkSpeed: 5
+  runSpeed: 5
+  airSpeed: 5
+  jumpSpeed: 5
+  amountOfJumps: 1
   fireRate: 0
   projectile: {fileID: 0}
   health: 0
   damageCooldown: 0
+--- !u!114 &1718109451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1718109443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 423e7f3af888c664b9d38b5b69dce614, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Actions
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}

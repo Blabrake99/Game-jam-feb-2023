@@ -16,12 +16,12 @@
                 },
                 {
                     "name": "OnMove",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "b5a102bb-bd2a-4043-8dad-1a7c1316807c",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "OnFire",
@@ -59,7 +59,7 @@
                 {
                     "name": "WASD",
                     "id": "8c37d20a-7b5b-4822-8da6-ce9ac02874ed",
-                    "path": "1DAxis",
+                    "path": "2DVector",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -68,8 +68,30 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "negative",
+                    "name": "Up",
                     "id": "5eaccb65-b14d-46e2-84db-20ca19aea7f6",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OnMove",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Down",
+                    "id": "5a346786-e506-4d3b-83c1-6edf2eb04fd8",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OnMove",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Left",
+                    "id": "1311f67a-2559-4811-9f28-16a7b97ff347",
                     "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
@@ -79,8 +101,8 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "positive",
-                    "id": "5a346786-e506-4d3b-83c1-6edf2eb04fd8",
+                    "name": "Right",
+                    "id": "59c79431-ee2b-47b0-b717-d5745fa16a8a",
                     "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
@@ -92,7 +114,7 @@
                 {
                     "name": "Arrows",
                     "id": "0bcb4445-8fd2-4c2a-a358-57bf74d94bf2",
-                    "path": "1DAxis",
+                    "path": "2DVector",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -101,8 +123,30 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "negative",
+                    "name": "Up",
                     "id": "30ece228-e49e-4510-b038-d8610b6d77cf",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OnMove",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Down",
+                    "id": "59ccae68-e8ef-4c2d-98a8-37f367ed745e",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OnMove",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Left",
+                    "id": "7bc42376-21d9-4eae-9902-c825ecc56ac8",
                     "path": "<Keyboard>/leftArrow",
                     "interactions": "",
                     "processors": "",
@@ -112,42 +156,9 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "positive",
-                    "id": "59ccae68-e8ef-4c2d-98a8-37f367ed745e",
+                    "name": "Right",
+                    "id": "ead96620-aee8-44a5-b9e4-f444ab9d7604",
                     "path": "<Keyboard>/rightArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "OnMove",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "LeftStick",
-                    "id": "5bc979d5-d173-4920-9ffb-d65b7830edde",
-                    "path": "1DAxis",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "OnMove",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "negative",
-                    "id": "affad650-7aa1-4c21-a9c5-15ed3533c328",
-                    "path": "<XInputController>/leftStick/right",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "OnMove",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "positive",
-                    "id": "d097f1e0-5b64-4175-87f6-18a4734f2e37",
-                    "path": "<XInputController>/leftStick/right",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -174,6 +185,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "OnFire",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "59b78fc1-a6e6-4d23-a6b7-d95a9764f194",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OnMove",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
