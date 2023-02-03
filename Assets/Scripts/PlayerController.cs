@@ -5,17 +5,17 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour, IDamageble
 {
     [Header("Movement Variables")]
-    [SerializeField, Tooltip("Why are you even reading the tool tip")] float walkSpeed;
-    [SerializeField, Tooltip("Why are you even reading the tool tip")] float runSpeed;
-    [SerializeField, Tooltip("Movement in the air while falling")] float airSpeed;
-    [SerializeField, Tooltip("How high you jump")] float jumpSpeed;
+    [SerializeField, Tooltip("Why are you even reading the tool tip")] float walkSpeed = 5f;
+    [SerializeField, Tooltip("Why are you even reading the tool tip")] float runSpeed = 7f;
+    //[SerializeField, Tooltip("Movement in the air while falling")] float airSpeed = 2f;
+    [SerializeField, Tooltip("How high you jump")] float jumpSpeed = 5f;
     [SerializeField, Tooltip("Amount of Jumps")] int amountOfJumps = 1;
     [Header("Projectile Variables")]
-    [SerializeField, Tooltip("The fire rate of your gun")] float fireRate;
+    [SerializeField, Tooltip("The fire rate of your gun")] float fireRate = .2f;
     [SerializeField, Tooltip("The projectile you are shooting")] GameObject projectile;
 
     [Header("Health Variables")]
-    [SerializeField, Tooltip("Players health")] int health;
+    [SerializeField, Tooltip("Players health")] int health = 10;
     [SerializeField, Tooltip("IFrames")] float damageCooldown;
 
     // [Header("Don't touch PATRICK")]
@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour, IDamageble
     {
         rb = GetComponent<Rigidbody>();
         distToGround = GetComponent<Collider>().bounds.extents.y;
-
+        //this is for setting up the player controls
         actions = new PlayerActions();
         actions.Actions.Enable();
         actions.Actions.OnJump.performed += OnJump;
@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour, IDamageble
     {
         //movement
         Vector2 inputVector = actions.Actions.OnMove.ReadValue<Vector2>();
-        yInput = inputVector.y;
+        //yInput = inputVector.y;
         rb.velocity = new Vector3(inputVector.x * walkSpeed, rb.velocity.y, 0);
         if (rb.velocity.x > 0)
             transform.rotation = new Quaternion(transform.rotation.x, 0, transform.rotation.z, transform.rotation.w);
@@ -61,6 +61,7 @@ public class PlayerController : MonoBehaviour, IDamageble
     {
         if (context.performed && jumpsDone > 0)
         {
+            //makes the player jump
             rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
             rb.AddForce(Vector3.up * jumpSpeed, ForceMode.Impulse);
             justjumpedTimer = .1f;
@@ -94,6 +95,7 @@ public class PlayerController : MonoBehaviour, IDamageble
     {
         //later
     }
+    //this checks for if the players grounded 
     private bool IsGrounded()
     {
         if (justjumpedTimer > 0)
