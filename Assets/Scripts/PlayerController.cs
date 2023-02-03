@@ -5,28 +5,38 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour, IDamageble
 {
     [Header("Movement Variables")]
-    [SerializeField, Tooltip("Why are you even reading the tool tip")] float walkSpeed = 5f;
-    [SerializeField, Tooltip("Why are you even reading the tool tip")] float runSpeed = 7f;
-    //[SerializeField, Tooltip("Movement in the air while falling")] float airSpeed = 2f;
-    [SerializeField, Tooltip("How high you jump")] float jumpSpeed = 5f;
-    [SerializeField, Tooltip("Amount of Jumps")] int amountOfJumps = 1;
+    [SerializeField, Tooltip("The speed at which you walk")] private float walkSpeed = 5f;
+    [SerializeField, Tooltip("The speed at which you run")] private float runSpeed = 7f;
+    [SerializeField, Tooltip("How high you jump")] private float jumpSpeed = 5f;
+    [SerializeField, Tooltip("Amount of Jumps")] private int amountOfJumps = 1;
+    [SerializeField, Tooltip("Speed at whick you decend while wall sliding")] private float wallSlidingSpeed = .5f;
+    [SerializeField, Tooltip("The power Of the wall jump")] Vector2 wallJumpPower = new Vector2(8f, 16f);
+    [SerializeField, Tooltip("The amount of time you are stuck wall jumping")] float wallJumpingDuration = .2f;
+
     [Header("Projectile Variables")]
-    [SerializeField, Tooltip("The fire rate of your gun")] float fireRate = .2f;
-    [SerializeField, Tooltip("The projectile you are shooting")] GameObject projectile;
+    [SerializeField, Tooltip("The fire rate of your gun")] private float fireRate = .2f;
+    [SerializeField, Tooltip("The projectile you are shooting")] private GameObject projectile;
 
     [Header("Health Variables")]
-    [SerializeField, Tooltip("Players health")] int health = 10;
-    [SerializeField, Tooltip("IFrames")] float damageCooldown;
+    [SerializeField, Tooltip("Players health")] private int health = 10;
+    [SerializeField, Tooltip("IFrames")] private float damageCooldown;
 
-    // [Header("Don't touch PATRICK")]
+    [Header("Don't touch PATRICK")]
+    [SerializeField] private LayerMask wallLayer;
+    [SerializeField] private Transform wallCheck;
     public int Health { get { return health; } set { health = value; } }
-    PlayerActions actions;
+    private PlayerActions actions;
     private float yInput;
     private int jumpsDone;
     private bool grounded => IsGrounded();
     private Rigidbody rb;
-    protected float damagedTimer, justjumpedTimer, distToGround;
-
+    private float damagedTimer, justjumpedTimer, distToGround;
+    private Vector2 inputVector;
+    private bool isWallJumping;
+    private bool isWallSliding;
+    private float wallJumpDirection;
+    private float wallJumpingTime = .1f;
+    private float wallJumpingCounter;
 
     void Start()
     {
@@ -39,11 +49,15 @@ public class PlayerController : MonoBehaviour, IDamageble
         actions.Actions.OnFire.performed += OnFire;
     }
     private void FixedUpdate()
+
     {
         //movement
-        Vector2 inputVector = actions.Actions.OnMove.ReadValue<Vector2>();
-        //yInput = inputVector.y;
-        rb.velocity = new Vector3(inputVector.x * walkSpeed, rb.velocity.y, 0);
+        if (!isWallJumping)
+        {
+            inputVector = actions.Actions.OnMove.ReadValue<Vector2>();
+            //yInput = inputVector.y;
+            rb.velocity = new Vector3(inputVector.x * walkSpeed, rb.velocity.y, 0);
+        }
         if (rb.velocity.x > 0)
             transform.rotation = new Quaternion(transform.rotation.x, 0, transform.rotation.z, transform.rotation.w);
         if (rb.velocity.x < 0)
@@ -54,18 +68,42 @@ public class PlayerController : MonoBehaviour, IDamageble
             if (jumpsDone != amountOfJumps)
                 jumpsDone = amountOfJumps;
         }
+        else
+        {
+            WallSlide();
+            WallJump();
+        }
         if (justjumpedTimer > 0)
             justjumpedTimer -= Time.deltaTime;
+        if (damagedTimer > 0)
+            damagedTimer -= Time.deltaTime;
     }
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (context.performed && jumpsDone > 0)
+        if (context.performed)
         {
-            //makes the player jump
-            rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-            rb.AddForce(Vector3.up * jumpSpeed, ForceMode.Impulse);
-            justjumpedTimer = .1f;
-            jumpsDone--;
+            if (isWallSliding)
+            {
+                if (wallJumpingCounter > 0f)
+                {
+                    isWallJumping = true;
+                    rb.velocity = new Vector2(wallJumpDirection * wallJumpPower.x, wallJumpPower.y);
+                    wallJumpingCounter = 0;
+
+                    Invoke(nameof(StopWallJumping), wallJumpingDuration);
+                }
+            }
+            else
+            {
+                if (jumpsDone > 0)
+                {
+                    //makes the player jump
+                    rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+                    rb.AddForce(Vector3.up * jumpSpeed, ForceMode.Impulse);
+                    justjumpedTimer = .1f;
+                    jumpsDone--;
+                }
+            }
         }
     }
     public void OnFire(InputAction.CallbackContext context)
@@ -90,6 +128,51 @@ public class PlayerController : MonoBehaviour, IDamageble
         {
             Respawn();
         }
+    }
+    private bool IsOnWall()
+    {
+        Collider[] temp = Physics.OverlapSphere(wallCheck.position, .2f, wallLayer);
+        if (temp.Length > 0)
+            return true;
+        else
+            return false;
+    }
+    private void WallSlide()
+    {
+        if (IsOnWall() && !IsGrounded() && inputVector.x != 0 && !isWallJumping)
+        {
+            isWallSliding = true;
+            rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -wallSlidingSpeed, float.MaxValue));
+        }
+        else
+        {
+            isWallSliding = false;
+        }
+    }
+    private void WallJump()
+    { 
+        if(isWallSliding)
+        {
+            isWallJumping = false;
+            if (inputVector.x > 0f)
+            {
+                wallJumpDirection = -1;
+            }
+            if(inputVector.x < 0f)
+            {
+                wallJumpDirection = 1;
+            }
+            wallJumpingCounter = wallJumpingTime;
+            CancelInvoke(nameof(StopWallJumping));
+        }
+        else
+        {
+            wallJumpingCounter -= Time.deltaTime;
+        }
+    }
+    private void StopWallJumping()
+    {
+        isWallJumping = false;
     }
     void Respawn()
     {

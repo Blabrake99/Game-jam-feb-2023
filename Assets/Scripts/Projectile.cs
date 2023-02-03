@@ -33,13 +33,13 @@ public class Projectile : MonoBehaviour
             //if a player bullet hits an enemy do damage
             if(playerBullet && col.tag == "Enemy")
             {
-                hit.Health -= damage;
+                hit.Damage(damage);
                 Destroy(this.gameObject);
             }
             //if a enemy bullet hits an player do damage
             if (!playerBullet && col.tag == "Player")
             {
-                hit.Health -= damage;
+                hit.Damage(damage);
                 Destroy(this.gameObject);
             }
         }
