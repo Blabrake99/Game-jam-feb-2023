@@ -81,7 +81,7 @@ MonoBehaviour:
   wallJumpPower: {x: 5, y: 5}
   wallJumpingDuration: 0.5
   fireRate: 0.5
-  projectile: {fileID: 6392904448365370659, guid: 736f7a7f1fc2e61489e23792bde26d52, type: 3}
+  projectile: {fileID: 1235826696118096243, guid: 1e6a208773197cc4c8b8c864933b6e46, type: 3}
   weapons:
   - {fileID: 0}
   - {fileID: 0}

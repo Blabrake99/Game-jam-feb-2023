@@ -43,6 +43,11 @@ public class Projectile : MonoBehaviour
     protected void OnTriggerEnter(Collider col)
     {
         IDamageble hit = col.GetComponent<IDamageble>();
+        if (col.isTrigger)
+        {
+            Physics.IgnoreCollision(GetComponent<Collider>(), col);
+            return;
+        }
         if(hit != null)
         {
             //if a player bullet hits an enemy do damage
