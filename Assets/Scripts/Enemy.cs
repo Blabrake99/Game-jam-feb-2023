@@ -30,7 +30,6 @@ public class Enemy : MonoBehaviour, IDamageble
     void Update()
     {
         float distanceFromPlayer = Vector3.Distance(gameObject.transform.position, player.gameObject.transform.position);
-        Debug.Log(distanceFromPlayer);
 
         if (distanceFromPlayer <= 7)
         {
