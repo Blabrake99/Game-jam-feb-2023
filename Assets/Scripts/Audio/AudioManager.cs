@@ -147,9 +147,17 @@ public class AudioManager : MonoBehaviour
 
     #endregion
 
+    #region ONE_SHOTS
+    public void playJump()
+    {
+        jump.GetComponent<AudioSource>().Play();
+    }
+
+    #endregion
+
     #region ONE_SHOTS_IN_WORLDSPACE
 
-    public void playBoingSound(Vector3 world_point)
+    public void playJump(Vector3 world_point)
     {
         var obj = Instantiate(jump);
         obj.transform.position = world_point;

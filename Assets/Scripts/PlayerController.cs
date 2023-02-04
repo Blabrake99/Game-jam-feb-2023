@@ -41,8 +41,9 @@ public class PlayerController : MonoBehaviour, IDamageble
     private float wallJumpingTime = .1f;
     private float wallJumpingCounter;
     private HealthBar bar;
+    private AudioManager audioManager;
     void Start()
-    {
+    { 
         rb = GetComponent<Rigidbody>();
         distToGround = GetComponent<Collider>().bounds.extents.y;
         respawnPoint = this.transform.position;
@@ -55,6 +56,7 @@ public class PlayerController : MonoBehaviour, IDamageble
         actions.Actions.OnJump.performed += OnJump;
         actions.Actions.OnFire.performed += OnFire;
         actions.Actions.OnPause.performed += OnPause;
+        audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
     }
     private void FixedUpdate()
 
@@ -97,6 +99,7 @@ public class PlayerController : MonoBehaviour, IDamageble
                     isWallJumping = true;
                     rb.velocity = new Vector2(wallJumpDirection * wallJumpPower.x, wallJumpPower.y);
                     wallJumpingCounter = 0;
+                    audioManager.playJump();
 
                     Invoke(nameof(StopWallJumping), wallJumpingDuration);
                 }
@@ -110,6 +113,7 @@ public class PlayerController : MonoBehaviour, IDamageble
                     rb.AddForce(Vector3.up * jumpSpeed, ForceMode.Impulse);
                     justjumpedTimer = .1f;
                     jumpsDone--;
+                    audioManager.playJump();
                 }
             }
         }
