@@ -40,12 +40,14 @@ public class PlayerController : MonoBehaviour, IDamageble
     private float wallJumpDirection;
     private float wallJumpingTime = .1f;
     private float wallJumpingCounter;
+    private HealthBar bar;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         distToGround = GetComponent<Collider>().bounds.extents.y;
         respawnPoint = this.transform.position;
         maxHealth = health;
+        bar = FindObjectOfType<HealthBar>();
         //this is for setting up the player controls
         actions = new PlayerActions();
         actions.Actions.Enable();
@@ -124,8 +126,8 @@ public class PlayerController : MonoBehaviour, IDamageble
             damagedTimer = Time.time + damageCooldown;
             Health -= amount;
             //this is where i'd put the health bar code
-
-            //bar.SetHealth(Health);
+            if(bar != null)
+                bar.SetHealth(Health);
         }
         if (Health < 1)
         {
@@ -185,6 +187,8 @@ public class PlayerController : MonoBehaviour, IDamageble
     {
         transform.position = respawnPoint;
         health = maxHealth;
+        if (bar != null)
+            bar.SetHealth(Health);
     }
     //this checks for if the players grounded 
     private bool IsGrounded()
