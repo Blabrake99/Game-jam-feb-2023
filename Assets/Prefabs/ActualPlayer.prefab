@@ -95,7 +95,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 72
   wallCheck: {fileID: 7819809848746271597}
-  gunTip: {fileID: 0}
+  gunTip: {fileID: 216217208455621256}
 --- !u!54 &119710896081172944
 Rigidbody:
   m_ObjectHideFlags: 0
