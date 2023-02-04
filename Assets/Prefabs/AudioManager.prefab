@@ -307,7 +307,7 @@ MonoBehaviour:
   normal: {fileID: 0}
   pauseFilter: {fileID: 0}
   pauseTimeout: 0.3
-  jump: {fileID: 0}
+  jump: {fileID: 6102973270847247205}
   box_break: {fileID: 0}
   coin_get: {fileID: 0}
   thud: {fileID: 0}

@@ -122,6 +122,7 @@ public class PlayerController : MonoBehaviour, IDamageble
     {
         if (context.performed)
         {
+            Damage(1);
             //SpawnBullet
             Instantiate(projectile, transform.position, transform.rotation);
         }
