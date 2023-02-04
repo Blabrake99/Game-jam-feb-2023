@@ -40,7 +40,7 @@ public class AudioManager : MonoBehaviour
     [Header("-----------------------------------------------------------------------------------------------------")]
     [Header("OneShots")]
     [Header("-----------------------------------------------------------------------------------------------------")]
-    [SerializeField] GameObject boing;
+    [SerializeField] GameObject jump;
     [SerializeField] GameObject box_break;
     [SerializeField] GameObject coin_get;
     [SerializeField] GameObject thud;
@@ -151,7 +151,7 @@ public class AudioManager : MonoBehaviour
 
     public void playBoingSound(Vector3 world_point)
     {
-        var obj = Instantiate(boing);
+        var obj = Instantiate(jump);
         obj.transform.position = world_point;
     }
 
