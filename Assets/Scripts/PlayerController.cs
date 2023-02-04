@@ -61,7 +61,6 @@ public class PlayerController : MonoBehaviour, IDamageble
         audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
     }
     private void FixedUpdate()
-
     {
         //movement
         if (!isWallJumping)
@@ -92,6 +91,54 @@ public class PlayerController : MonoBehaviour, IDamageble
         if (shootTimer > 0)
             shootTimer -= Time.deltaTime;
     }
+    #region Health
+    public bool MaxHealth()
+    {
+        if (health == maxHealth)
+            return true;
+        else
+        {
+            return false;
+        }
+    }
+    public void GainHealth(int amount)
+    {
+        if (health + amount > maxHealth)
+            health = maxHealth;
+        else
+        {
+            health += maxHealth;
+        }
+    }
+    public void Damage(int amount)
+    {
+        if (Time.time > damagedTimer)
+        {
+            damagedTimer = Time.time + damageCooldown;
+            Health -= amount;
+            //this is where i'd put the health bar code
+            if (bar != null)
+                bar.SetHealth(Health);
+        }
+        if (Health < 1)
+        {
+            Respawn();
+        }
+    }
+    void Respawn()
+    {
+        transform.position = respawnPoint;
+        health = maxHealth;
+        if (bar != null)
+            bar.SetHealth(Health);
+    }
+    public void setSpawnLocation(Vector3 newSpawnLocation)
+    {
+        respawnPoint = newSpawnLocation;
+    }
+    #endregion
+
+    #region ButtonPresses
     public void OnJump(InputAction.CallbackContext context)
     {
         if (context.performed)
@@ -179,25 +226,9 @@ public class PlayerController : MonoBehaviour, IDamageble
             currentWeapon = temp;
         }
     }
-    public void Damage(int amount)
-    {
-        if (Time.time > damagedTimer)
-        {
-            damagedTimer = Time.time + damageCooldown;
-            Health -= amount;
-            //this is where i'd put the health bar code
-            if(bar != null)
-                bar.SetHealth(Health);
-        }
-        if (Health < 1)
-        {
-            Respawn();
-        }
-    }
-    public void setSpawnLocation(Vector3 newSpawnLocation)
-    {
-        respawnPoint = newSpawnLocation;
-    }
+    #endregion
+
+    #region For walls
     private bool IsOnWall()
     {
         Collider[] temp = Physics.OverlapSphere(wallCheck.position, .2f, wallLayer);
@@ -243,13 +274,7 @@ public class PlayerController : MonoBehaviour, IDamageble
     {
         isWallJumping = false;
     }
-    void Respawn()
-    {
-        transform.position = respawnPoint;
-        health = maxHealth;
-        if (bar != null)
-            bar.SetHealth(Health);
-    }
+
     //this checks for if the players grounded 
     private bool IsGrounded()
     {
@@ -257,5 +282,19 @@ public class PlayerController : MonoBehaviour, IDamageble
             return false;
         isWallSliding = false;
         return Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.1f);
+    }
+    #endregion
+
+    public void AddJumps(int jumps)
+    {
+        amountOfJumps += jumps;
+    }
+    private void OnTriggerEnter(Collider col)
+    {
+        ICollectible collectible = col.GetComponent<ICollectible>();
+        if (collectible != null)
+        {
+            collectible.Collected(this);
+        }
     }
 }
