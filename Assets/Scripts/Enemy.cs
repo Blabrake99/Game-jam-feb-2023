@@ -27,19 +27,21 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         float distanceFromPlayer = Vector3.Distance(gameObject.transform.position, player.gameObject.transform.position);
-        //Debug.Log(distanceFromPlayer);
+        Debug.Log(distanceFromPlayer);
 
-        if(distanceFromPlayer >= 10)
+        if(distanceFromPlayer <= 7)
         {
-            //gameObject.transform.position;
+            agent.SetDestination(player.transform.position);
+        }
+        else if(distanceFromPlayer > 7)
+        {
+            ChangeDestination();
         }
 
         if (agent.remainingDistance <= 1f)
         {
             ChangeWaypoint();
             ChangeDestination();
-
-            Debug.Log("Made it to waypoint " + waypoints.Count);
         }
     }
 
