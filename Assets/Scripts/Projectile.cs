@@ -10,7 +10,7 @@ public class Projectile : MonoBehaviour
     [SerializeField, Tooltip("How long till the bullet despawns")] float projectileDuration = 2f;
     [SerializeField, Tooltip("Does gravity effect the bullet")] bool useGravity = false;
     [SerializeField, Tooltip("If the bullet is a Player bullet")] bool playerBullet = false;
-
+    [SerializeField, Tooltip("Direction of the bullet")] Direction dir = Direction.Right;
     private Rigidbody rb;
 
     private void Start()
@@ -23,7 +23,22 @@ public class Projectile : MonoBehaviour
     }
     private void Update()
     {
-        rb.AddForce(transform.right * projectileSpeed);
+        if (dir == Direction.Right)
+        {
+            rb.AddForce(transform.right * projectileSpeed);
+        } 
+        else if(dir == Direction.Left)
+        {
+            rb.AddForce(-transform.right * projectileSpeed);
+        } 
+        else if (dir == Direction.Forward)
+        {
+            rb.AddForce(transform.forward * projectileSpeed);
+        }
+        else
+        {
+            rb.AddForce(-transform.forward * projectileSpeed);
+        }
     }
     protected void OnTriggerEnter(Collider col)
     {
@@ -48,5 +63,12 @@ public class Projectile : MonoBehaviour
             //this is if the bullet hits a wall
             Destroy(this.gameObject);
         }    
+    }
+    enum Direction
+    {
+        Right,
+        Left,
+        Forward,
+        Back
     }
 }
