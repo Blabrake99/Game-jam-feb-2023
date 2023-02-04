@@ -23,7 +23,7 @@ public class Projectile : MonoBehaviour
     }
     private void Update()
     {
-        rb.AddForce(transform.forward * projectileSpeed);
+        rb.AddForce(transform.right * projectileSpeed);
     }
     protected void OnTriggerEnter(Collider col)
     {

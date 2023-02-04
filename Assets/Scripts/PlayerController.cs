@@ -119,6 +119,7 @@ public class PlayerController : MonoBehaviour, IDamageble
         if (context.performed)
         {
             //SpawnBullet
+            Instantiate(projectile, transform.position, transform.rotation);
         }
     }
     public void OnPause(InputAction.CallbackContext context)
