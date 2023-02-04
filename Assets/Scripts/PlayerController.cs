@@ -270,7 +270,15 @@ public class PlayerController : MonoBehaviour, IDamageble
     {
         if (IsOnWall() && !IsGrounded() && inputVector.x != 0 && !isWallJumping)
         {
-            PlayAnimation("IsWallSliding");
+            if (inputVector.x > 0)
+            {
+                transform.rotation = Quaternion.Inverse(StartEularAngles);
+            }
+            if (inputVector.x < 0)
+            {
+                transform.rotation = StartEularAngles;
+            }
+                PlayAnimation("IsWallSliding");
             isWallSliding = true;
             rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -wallSlidingSpeed, float.MaxValue));
         }
