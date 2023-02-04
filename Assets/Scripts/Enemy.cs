@@ -13,9 +13,12 @@ public class Enemy : MonoBehaviour, IDamageble
     [SerializeField] int health = 5;
     public int Health { get { return health; } set { health = value; } }
 
+    [SerializeField]
+    private float shootCD;
+
     public enum EnemyType
     {
-        GROUNDEDPATROL = 1,
+        GROUNDEDPATROL,
         SITTING,
         FLYING
     }
@@ -24,6 +27,7 @@ public class Enemy : MonoBehaviour, IDamageble
     EnemyType type;
     [SerializeField]
     private GameObject projectile;
+    public GameObject shootbox;
 
     // Start is called before the first frame update
     void Start()
@@ -70,10 +74,19 @@ public class Enemy : MonoBehaviour, IDamageble
             case EnemyType.SITTING:
                 if (distanceFromPlayer <= 7)
                 {
-                    Instantiate(projectile, new Vector3(transform.position.x, transform.position.y + 10, transform.position.z), transform.rotation);
+                    if (shootCD <= 0)
+                    {
+                        Instantiate(projectile, shootbox.transform.position, transform.rotation);
+                        shootCD = 1;
+                    }
                 }
 
                 break;
+        }
+
+        if(shootCD > 0)
+        {
+            shootCD -= Time.deltaTime;
         }
     }
 
