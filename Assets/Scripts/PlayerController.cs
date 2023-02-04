@@ -44,6 +44,9 @@ public class PlayerController : MonoBehaviour, IDamageble
     private float wallJumpingCounter;
     private HealthBar bar;
     private AudioManager audioManager;
+    private Quaternion StartEularAngles;
+    private Animator anim;
+    private float shootAnimTimer;
     void Start()
     { 
         rb = GetComponent<Rigidbody>();
@@ -59,6 +62,8 @@ public class PlayerController : MonoBehaviour, IDamageble
         actions.Actions.OnFire.performed += OnFire;
         actions.Actions.OnPause.performed += OnPause;
         audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
+        StartEularAngles = transform.rotation;
+        anim = GetComponent<Animator>();
     }
     private void FixedUpdate()
     {
@@ -70,17 +75,29 @@ public class PlayerController : MonoBehaviour, IDamageble
             rb.velocity = new Vector3(inputVector.x * walkSpeed, rb.velocity.y, 0);
         }
         if (rb.velocity.x > 0)
-            transform.rotation = new Quaternion(transform.rotation.x, 0, transform.rotation.z, transform.rotation.w);
-        if (rb.velocity.x < 0)
-            transform.rotation = new Quaternion(transform.rotation.x, 180, transform.rotation.z, transform.rotation.w);
+        {
+            transform.rotation = StartEularAngles;
+            PlayAnimation("IsMoving");
+        } else if (rb.velocity.x < 0)
+        {
+            transform.rotation = Quaternion.Inverse(StartEularAngles);
+            PlayAnimation("IsMoving");
+        } else
+        {
+            StopAnimation("IsMoving");
+        }
         if (grounded)
         {
+            StopAnimation("IsJumping");
+            StopAnimation("IsWallSliding");
+            PlayAnimation("IsGrounded");
             //resets jump counters when on ground
             if (jumpsDone != amountOfJumps)
                 jumpsDone = amountOfJumps;
         }
         else
         {
+            StopAnimation("IsGrounded");
             WallSlide();
             WallJump();
         }
@@ -90,6 +107,10 @@ public class PlayerController : MonoBehaviour, IDamageble
             damagedTimer -= Time.deltaTime;
         if (shootTimer > 0)
             shootTimer -= Time.deltaTime;
+        if (shootAnimTimer > 0)
+            shootAnimTimer -= Time.deltaTime;
+        else
+            StopAnimation("IsShooting");
     }
     #region Health
     public bool MaxHealth()
@@ -147,6 +168,8 @@ public class PlayerController : MonoBehaviour, IDamageble
             {
                 if (wallJumpingCounter > 0f)
                 {
+                    StopAnimation("IsWallSliding");
+                    PlayAnimation("WallJump");
                     isWallJumping = true;
                     rb.velocity = new Vector2(wallJumpDirection * wallJumpPower.x, wallJumpPower.y);
                     wallJumpingCounter = 0;
@@ -159,6 +182,9 @@ public class PlayerController : MonoBehaviour, IDamageble
             {
                 if (jumpsDone > 0)
                 {
+                    PlayAnimation("IsJumping");
+                    StopAnimation("WallJump");
+                    StopAnimation("IsWallSliding");
                     //makes the player jump
                     rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
                     rb.AddForce(Vector3.up * jumpSpeed, ForceMode.Impulse);
@@ -175,9 +201,11 @@ public class PlayerController : MonoBehaviour, IDamageble
         {
             if (shootTimer <= 0)
             {
+                PlayAnimation("IsShooting");
                 //SpawnBullet
                 Instantiate(projectile, transform.position, transform.rotation);
                 shootTimer = fireRate;
+                shootAnimTimer = 1f;
             }
         }
     }
@@ -241,11 +269,13 @@ public class PlayerController : MonoBehaviour, IDamageble
     {
         if (IsOnWall() && !IsGrounded() && inputVector.x != 0 && !isWallJumping)
         {
+            PlayAnimation("IsWallSliding");
             isWallSliding = true;
             rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -wallSlidingSpeed, float.MaxValue));
         }
         else
         {
+            StopAnimation("IsWallSliding");
             isWallSliding = false;
         }
     }
@@ -281,7 +311,7 @@ public class PlayerController : MonoBehaviour, IDamageble
         if (justjumpedTimer > 0)
             return false;
         isWallSliding = false;
-        return Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.1f);
+        return Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.01f);
     }
     #endregion
 
@@ -296,5 +326,22 @@ public class PlayerController : MonoBehaviour, IDamageble
         {
             collectible.Collected(this);
         }
+    }
+    /// <summary>
+    /// Call this for anytime you need to play an animation 
+    /// </summary>
+    /// <param name="animName"></param>
+    public void PlayAnimation(string BoolName)
+    {
+        anim.SetBool(BoolName, true);
+    }
+
+    /// <summary>
+    /// Call this for anytime you need to stop an animation
+    /// </summary>
+    /// <param name="BoolName"></param>
+    public void StopAnimation(string BoolName)
+    {
+        anim.SetBool(BoolName, false);
     }
 }
