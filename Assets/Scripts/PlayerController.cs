@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour, IDamageble
     [SerializeField] private Transform wallCheck;
     public int Health { get { return health; } set { health = value; } }
     private int maxHealth;
-
+    private GameManager gameManager;
     private Vector3 respawnPoint;
     private PlayerActions actions;
     private float yInput;
@@ -47,12 +47,14 @@ public class PlayerController : MonoBehaviour, IDamageble
         distToGround = GetComponent<Collider>().bounds.extents.y;
         respawnPoint = this.transform.position;
         maxHealth = health;
+        gameManager = FindObjectOfType<GameManager>();
         bar = FindObjectOfType<HealthBar>();
         //this is for setting up the player controls
         actions = new PlayerActions();
         actions.Actions.Enable();
         actions.Actions.OnJump.performed += OnJump;
         actions.Actions.OnFire.performed += OnFire;
+        actions.Actions.OnPause.performed += OnPause;
     }
     private void FixedUpdate()
 
@@ -117,6 +119,13 @@ public class PlayerController : MonoBehaviour, IDamageble
         if (context.performed)
         {
             //SpawnBullet
+        }
+    }
+    public void OnPause(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            gameManager.Pause();
         }
     }
     public void Damage(int amount)
