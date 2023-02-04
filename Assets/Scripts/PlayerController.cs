@@ -37,7 +37,6 @@ public class PlayerController : MonoBehaviour, IDamageble
     private float wallJumpDirection;
     private float wallJumpingTime = .1f;
     private float wallJumpingCounter;
-
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -183,7 +182,7 @@ public class PlayerController : MonoBehaviour, IDamageble
     {
         if (justjumpedTimer > 0)
             return false;
-
+        isWallSliding = false;
         return Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.1f);
     }
 }
