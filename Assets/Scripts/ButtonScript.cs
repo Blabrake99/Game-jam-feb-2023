@@ -10,14 +10,12 @@ public class ButtonScript : MonoBehaviour
     {
         SceneManager.LoadScene("SampleScene 2 - the scenening");
     }
-
+    public void GoToScene(int sceneIndex)
+    {
+        SceneManager.LoadScene(sceneIndex);
+    }
     public void NoPlay()
     {
         Application.Quit();
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
