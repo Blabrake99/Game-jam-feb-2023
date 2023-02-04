@@ -25,6 +25,9 @@ public class PlayerController : MonoBehaviour, IDamageble
     [SerializeField] private LayerMask wallLayer;
     [SerializeField] private Transform wallCheck;
     public int Health { get { return health; } set { health = value; } }
+    private int maxHealth;
+
+    private Vector3 respawnPoint;
     private PlayerActions actions;
     private float yInput;
     private int jumpsDone;
@@ -41,6 +44,8 @@ public class PlayerController : MonoBehaviour, IDamageble
     {
         rb = GetComponent<Rigidbody>();
         distToGround = GetComponent<Collider>().bounds.extents.y;
+        respawnPoint = this.transform.position;
+        maxHealth = health;
         //this is for setting up the player controls
         actions = new PlayerActions();
         actions.Actions.Enable();
@@ -109,7 +114,6 @@ public class PlayerController : MonoBehaviour, IDamageble
     {
         if (context.performed)
         {
-            print("pew pew");
             //SpawnBullet
         }
     }
@@ -127,6 +131,10 @@ public class PlayerController : MonoBehaviour, IDamageble
         {
             Respawn();
         }
+    }
+    public void setSpawnLocation(Vector3 newSpawnLocation)
+    {
+        respawnPoint = newSpawnLocation;
     }
     private bool IsOnWall()
     {
@@ -175,7 +183,8 @@ public class PlayerController : MonoBehaviour, IDamageble
     }
     void Respawn()
     {
-        //later
+        transform.position = respawnPoint;
+        health = maxHealth;
     }
     //this checks for if the players grounded 
     private bool IsGrounded()
