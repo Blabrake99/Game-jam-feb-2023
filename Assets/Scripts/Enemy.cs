@@ -13,6 +13,18 @@ public class Enemy : MonoBehaviour, IDamageble
     [SerializeField] int health = 5;
     public int Health { get { return health; } set { health = value; } }
 
+    public enum EnemyType
+    {
+        GROUNDEDPATROL = 1,
+        SITTING,
+        FLYING
+    }
+    
+    [SerializeField]
+    EnemyType type;
+    [SerializeField]
+    private GameObject projectile;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,10 +32,16 @@ public class Enemy : MonoBehaviour, IDamageble
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindGameObjectWithTag("Player");
 
-        if (waypoints != null && waypoints.Count >= 2)
+        switch (type)
         {
-            waypointIndex = 0;
+            case EnemyType.GROUNDEDPATROL:
+                if (waypoints != null && waypoints.Count >= 2)
+                {
+                    waypointIndex = 0;
+                }
+                break;
         }
+        
     }
 
     // Update is called once per frame
@@ -31,6 +49,9 @@ public class Enemy : MonoBehaviour, IDamageble
     {
         float distanceFromPlayer = Vector3.Distance(gameObject.transform.position, player.gameObject.transform.position);
 
+        switch (type)
+        {
+            case EnemyType.GROUNDEDPATROL:
         if (distanceFromPlayer <= 7)
         {
             agent.SetDestination(player.transform.position);
@@ -44,6 +65,15 @@ public class Enemy : MonoBehaviour, IDamageble
         {
             ChangeWaypoint();
             ChangeDestination();
+        }
+                break;
+            case EnemyType.SITTING:
+                if (distanceFromPlayer <= 7)
+                {
+                    Instantiate(projectile, new Vector3(transform.position.x, transform.position.y + 10, transform.position.z), transform.rotation);
+                }
+
+                break;
         }
     }
 
