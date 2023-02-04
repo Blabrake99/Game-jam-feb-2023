@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour, IDamageble
     [Header("Don't touch PATRICK")]
     [SerializeField] private LayerMask wallLayer;
     [SerializeField] private Transform wallCheck;
+    [SerializeField, Tooltip("The tip of the gun")] Transform gunTip;
     public int Health { get { return health; } set { health = value; } }
     private int maxHealth;
     private GameManager gameManager;
@@ -203,7 +204,7 @@ public class PlayerController : MonoBehaviour, IDamageble
             {
                 PlayAnimation("IsShooting");
                 //SpawnBullet
-                Instantiate(projectile, transform.position, transform.rotation);
+                Instantiate(projectile, gunTip.position, transform.rotation);
                 shootTimer = fireRate;
                 shootAnimTimer = 1f;
             }

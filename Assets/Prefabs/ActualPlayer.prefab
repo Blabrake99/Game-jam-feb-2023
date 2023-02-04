@@ -38,6 +38,7 @@ Transform:
   - {fileID: 6854007177306670394}
   - {fileID: 8341881914848534806}
   - {fileID: 2759434678657786834}
+  - {fileID: 216217208455621256}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
@@ -94,6 +95,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 72
   wallCheck: {fileID: 7819809848746271597}
+  gunTip: {fileID: 0}
 --- !u!54 &119710896081172944
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -769,6 +771,37 @@ Transform:
   - {fileID: 8507875987490493369}
   m_Father: {fileID: 1077957464953776591}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4186462347510352337
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 216217208455621256}
+  m_Layer: 0
+  m_Name: Bullet Tip
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &216217208455621256
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4186462347510352337}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: 0.512, z: 0.546}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 784361635276465001}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4234223445345160458
 GameObject:

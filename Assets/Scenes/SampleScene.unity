@@ -1136,6 +1136,10 @@ PrefabInstance:
       value: ActualPlayer
       objectReference: {fileID: 0}
     - target: {fileID: 119710896081172951, guid: aee3b9237238f754c99bc61bce697403, type: 3}
+      propertyPath: gunTip
+      value: 
+      objectReference: {fileID: 7819809847401517236}
+    - target: {fileID: 119710896081172951, guid: aee3b9237238f754c99bc61bce697403, type: 3}
       propertyPath: projectile
       value: 
       objectReference: {fileID: 1235826696118096243, guid: 1e6a208773197cc4c8b8c864933b6e46, type: 3}
@@ -1185,6 +1189,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aee3b9237238f754c99bc61bce697403, type: 3}
+--- !u!4 &7819809847401517236 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 216217208455621256, guid: aee3b9237238f754c99bc61bce697403, type: 3}
+  m_PrefabInstance: {fileID: 7819809847401517235}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7943783503371380575
 PrefabInstance:
   m_ObjectHideFlags: 0
