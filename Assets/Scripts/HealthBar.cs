@@ -26,8 +26,8 @@ public class HealthBar : MonoBehaviour
     public void SetHealth(int _health)
     {
         health = _health;
-
-        image.sprite = sprites[health - 1];
+        if(health > 0)
+            image.sprite = sprites[health - 1];
         //slider.value = health;
 
         //fill.color = gradient.Evaluate(slider.normalizedValue);

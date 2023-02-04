@@ -71,6 +71,15 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""OnSwitch"",
+                    ""type"": ""Value"",
+                    ""id"": ""69367f8a-c951-488e-9342-dbb41f05c805"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -348,6 +357,83 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                     ""action"": ""OnMove"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c2bdb309-c32e-48d0-839b-395e96a96737"",
+                    ""path"": ""<XInputController>/dpad"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OnSwitch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""286fb689-08cb-4fc7-b39e-448a6e950f58"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OnSwitch"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""d3506c9a-3d53-4cb7-a34a-6bc8282d2327"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OnSwitch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""6eba5c63-4800-4ae9-895d-2ec127e2ed19"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OnSwitch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""10da79dd-6ae1-4a46-9261-e855b90a395f"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OnSwitch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""c1dac2cc-3e8c-4c55-96a6-37832e970f14"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OnSwitch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f58cfc81-c201-48ad-87c0-07411a4db8af"",
+                    ""path"": ""<Gamepad>/dpad"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OnSwitch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -361,6 +447,7 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
         m_Actions_OnFire = m_Actions.FindAction("OnFire", throwIfNotFound: true);
         m_Actions_OnInteract = m_Actions.FindAction("OnInteract", throwIfNotFound: true);
         m_Actions_OnPause = m_Actions.FindAction("OnPause", throwIfNotFound: true);
+        m_Actions_OnSwitch = m_Actions.FindAction("OnSwitch", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -425,6 +512,7 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Actions_OnFire;
     private readonly InputAction m_Actions_OnInteract;
     private readonly InputAction m_Actions_OnPause;
+    private readonly InputAction m_Actions_OnSwitch;
     public struct ActionsActions
     {
         private @PlayerActions m_Wrapper;
@@ -434,6 +522,7 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
         public InputAction @OnFire => m_Wrapper.m_Actions_OnFire;
         public InputAction @OnInteract => m_Wrapper.m_Actions_OnInteract;
         public InputAction @OnPause => m_Wrapper.m_Actions_OnPause;
+        public InputAction @OnSwitch => m_Wrapper.m_Actions_OnSwitch;
         public InputActionMap Get() { return m_Wrapper.m_Actions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -458,6 +547,9 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                 @OnPause.started -= m_Wrapper.m_ActionsActionsCallbackInterface.OnOnPause;
                 @OnPause.performed -= m_Wrapper.m_ActionsActionsCallbackInterface.OnOnPause;
                 @OnPause.canceled -= m_Wrapper.m_ActionsActionsCallbackInterface.OnOnPause;
+                @OnSwitch.started -= m_Wrapper.m_ActionsActionsCallbackInterface.OnOnSwitch;
+                @OnSwitch.performed -= m_Wrapper.m_ActionsActionsCallbackInterface.OnOnSwitch;
+                @OnSwitch.canceled -= m_Wrapper.m_ActionsActionsCallbackInterface.OnOnSwitch;
             }
             m_Wrapper.m_ActionsActionsCallbackInterface = instance;
             if (instance != null)
@@ -477,6 +569,9 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                 @OnPause.started += instance.OnOnPause;
                 @OnPause.performed += instance.OnOnPause;
                 @OnPause.canceled += instance.OnOnPause;
+                @OnSwitch.started += instance.OnOnSwitch;
+                @OnSwitch.performed += instance.OnOnSwitch;
+                @OnSwitch.canceled += instance.OnOnSwitch;
             }
         }
     }
@@ -488,5 +583,6 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
         void OnOnFire(InputAction.CallbackContext context);
         void OnOnInteract(InputAction.CallbackContext context);
         void OnOnPause(InputAction.CallbackContext context);
+        void OnOnSwitch(InputAction.CallbackContext context);
     }
 }

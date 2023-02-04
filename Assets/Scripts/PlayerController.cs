@@ -13,9 +13,11 @@ public class PlayerController : MonoBehaviour, IDamageble
     [SerializeField, Tooltip("The power Of the wall jump")] Vector2 wallJumpPower = new Vector2(8f, 16f);
     [SerializeField, Tooltip("The amount of time you are stuck wall jumping")] float wallJumpingDuration = .2f;
 
-    [Header("Projectile Variables")]
+    [Header("Weapon Variables")]
     [SerializeField, Tooltip("The fire rate of your gun")] private float fireRate = .2f;
     [SerializeField, Tooltip("The projectile you are shooting")] private GameObject projectile;
+    [SerializeField, Tooltip("Loadout for the player")] GameObject[] weapons = new GameObject[4];
+    [SerializeField, Tooltip("Current selected weapon")] GameObject currentWeapon;
 
     [Header("Health Variables")]
     [SerializeField, Tooltip("Players health")] private int health = 10;
@@ -33,7 +35,7 @@ public class PlayerController : MonoBehaviour, IDamageble
     private int jumpsDone;
     private bool grounded => IsGrounded();
     private Rigidbody rb;
-    private float damagedTimer, justjumpedTimer, distToGround;
+    private float damagedTimer, justjumpedTimer, distToGround, shootTimer;
     private Vector2 inputVector;
     private bool isWallJumping;
     private bool isWallSliding;
@@ -87,6 +89,8 @@ public class PlayerController : MonoBehaviour, IDamageble
             justjumpedTimer -= Time.deltaTime;
         if (damagedTimer > 0)
             damagedTimer -= Time.deltaTime;
+        if (shootTimer > 0)
+            shootTimer -= Time.deltaTime;
     }
     public void OnJump(InputAction.CallbackContext context)
     {
@@ -122,9 +126,12 @@ public class PlayerController : MonoBehaviour, IDamageble
     {
         if (context.performed)
         {
-            Damage(1);
-            //SpawnBullet
-            Instantiate(projectile, transform.position, transform.rotation);
+            if (shootTimer <= 0)
+            {
+                //SpawnBullet
+                Instantiate(projectile, transform.position, transform.rotation);
+                shootTimer = fireRate;
+            }
         }
     }
     public void OnPause(InputAction.CallbackContext context)
@@ -132,6 +139,44 @@ public class PlayerController : MonoBehaviour, IDamageble
         if (context.performed)
         {
             gameManager.Pause();
+        }
+    }
+    public void OnSwitch(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            //uncomment this later
+
+            //Vector2 temp = actions.Actions.OnSwitch.ReadValue<Vector2>();
+            //if (temp.x > 0)
+            //{
+            //    switchWeapon(0);
+            //    return;
+            //}
+            //if (temp.x < 0)
+            //{
+            //    switchWeapon(1);
+            //    return;
+            //}
+            //if (temp.y > 0)
+            //{
+            //    switchWeapon(2);
+            //    return;
+            //}
+            //if (temp.y < 0)
+            //{
+            //    switchWeapon(3);
+            //    return;
+            //}
+        }
+    }
+    void switchWeapon(int num)
+    {
+        if (currentWeapon != weapons[num] && weapons[num] != null)
+        {
+            GameObject temp = Instantiate(weapons[num], currentWeapon.transform.position, currentWeapon.transform.rotation, gameObject.transform);
+            Destroy(currentWeapon);
+            currentWeapon = temp;
         }
     }
     public void Damage(int amount)
