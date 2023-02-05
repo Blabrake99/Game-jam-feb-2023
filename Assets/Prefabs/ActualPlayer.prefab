@@ -74,14 +74,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40f0a9062fea6464db8d62fec0bdc7bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 5
+  walkSpeed: 4.1
   runSpeed: 7
-  jumpSpeed: 6
-  amountOfJumps: 2
+  jumpSpeed: 4.44
+  amountOfJumps: 1
   wallSlidingSpeed: 0.4
   wallJumpPower: {x: 5, y: 5}
   wallJumpingDuration: 0.5
-  fireRate: 0.5
+  fireRate: 0.002
   projectile: {fileID: 1235826696118096243, guid: 1e6a208773197cc4c8b8c864933b6e46, type: 3}
   weapons:
   - {fileID: 0}
@@ -796,7 +796,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4186462347510352337}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 0.512, z: 0.546}
+  m_LocalPosition: {x: 0, y: 0.414, z: 0.871}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
