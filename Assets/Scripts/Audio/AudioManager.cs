@@ -40,6 +40,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField] GameObject GoingSomewhere;
     [SerializeField] GameObject BossCPU;
 
+    private AudioSource currentBGM;
+
 
     #endregion
     private void Awake()
@@ -129,9 +131,14 @@ public class AudioManager : MonoBehaviour
 
     public void playGoingSomewhere()
     {
+        if(currentBGM != null)
+        {
+            currentBGM.Stop();
+        }
         AudioSource song = GoingSomewhere.GetComponent<AudioSource>();
         song.loop = true;
         song.Play();
+        currentBGM = song;
     }
 
 
@@ -160,11 +167,14 @@ public class AudioManager : MonoBehaviour
 
     public void playBossTheme()
     {
-        AudioSource song = GoingSomewhere.GetComponent<AudioSource>();
-        song.Stop();
+        if (currentBGM != null)
+        {
+            currentBGM.Stop();
+        }
         AudioSource boss = BossCPU.GetComponent<AudioSource>();
         boss.loop = true;
         boss.Play();
+        currentBGM = boss;
     }
     #endregion
 
