@@ -18,9 +18,8 @@ public class Enemy : MonoBehaviour, IDamageble
 
     public enum EnemyType
     {
-        GROUNDEDPATROL,
+        PATROL,
         SITTING,
-        FLYING
     }
     
     [SerializeField]
@@ -38,7 +37,7 @@ public class Enemy : MonoBehaviour, IDamageble
 
         switch (type)
         {
-            case EnemyType.GROUNDEDPATROL:
+            case EnemyType.PATROL:
                 if (waypoints != null && waypoints.Count >= 2)
                 {
                     waypointIndex = 0;
@@ -55,7 +54,7 @@ public class Enemy : MonoBehaviour, IDamageble
 
         switch (type)
         {
-            case EnemyType.GROUNDEDPATROL:
+            case EnemyType.PATROL:
         if (distanceFromPlayer <= 7)
         {
             agent.SetDestination(player.transform.position);
