@@ -35,11 +35,11 @@ public class SetBGM : MonoBehaviour
             switch (theme)
             {
                 case Theme.Going_Somewhere:
-                    Debug.Log("Playing going somewhere");
+                    //Debug.Log("Playing going somewhere");
                     manager.playGoingSomewhere();
                     break;
                 case Theme.Boss_Battle:
-                    Debug.Log("Playing boss");
+                    //Debug.Log("Playing boss");
 
                     manager.playBossTheme();
                     break;

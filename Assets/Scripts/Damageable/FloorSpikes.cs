@@ -10,15 +10,17 @@ public class FloorSpikes : MonoBehaviour
         if (col.gameObject.tag == "Player")
         {
             col.gameObject.GetComponent<PlayerController>().Damage(1);
-            repositionAtPoint(col.gameObject);
+            if(col.gameObject.GetComponent<PlayerController>().Health > 1)
+                repositionAtPoint(col.gameObject);
         }
     }
     void repositionAtPoint(GameObject player) 
     {
         if (currentPoint != null)
-        {
-            if (player.GetComponent<PlayerController>().Health > 0)
+        {           
+            if (player.GetComponent<PlayerController>().Health > 1)
             {
+                player.GetComponent<Rigidbody>().velocity = Vector3.zero;
                 player.transform.position = new Vector3(currentPoint.transform.position.x,
                     currentPoint.transform.position.y, player.transform.position.z);
             }

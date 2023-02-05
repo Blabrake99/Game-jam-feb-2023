@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour, IDamageble
     public int Health { get { return health; } set { health = value; } }
     private int maxHealth;
     private GameManager gameManager;
-    private Vector3 respawnPoint;
+    public Vector3 respawnPoint;
     private PlayerActions actions;
     private float yInput;
     private int jumpsDone;
@@ -71,64 +71,80 @@ public class PlayerController : MonoBehaviour, IDamageble
     }
     private void FixedUpdate()
     {
-        isShooting = actions.Actions.OnFire.ReadValue<float>();
-        //movement
-        if (!isWallJumping)
+        if (!gameManager.isPaused)
         {
-            inputVector = actions.Actions.OnMove.ReadValue<Vector2>();
-            //yInput = inputVector.y;
-            rb.velocity = new Vector3(inputVector.x * walkSpeed, rb.velocity.y, 0);
-        }
-        if (rb.velocity.x > 0)
-        {
-            transform.rotation = StartEularAngles;
-            PlayAnimation("IsMoving");
-        } else if (rb.velocity.x < 0)
-        {
-            transform.rotation = Quaternion.Inverse(StartEularAngles);
-            PlayAnimation("IsMoving");
-        } else
-        {
-            StopAnimation("IsMoving");
-        }
-        if (grounded)
-        {
-            StopAnimation("IsJumping");
-            StopAnimation("IsWallSliding");
-            PlayAnimation("IsGrounded");
-            //resets jump counters when on ground
-            if (jumpsDone != amountOfJumps)
-                jumpsDone = amountOfJumps;
+            isShooting = actions.Actions.OnFire.ReadValue<float>();
+            //movement
+            if (!isWallJumping)
+            {
+                inputVector = actions.Actions.OnMove.ReadValue<Vector2>();
+                //yInput = inputVector.y;
+                rb.velocity = new Vector3(inputVector.x * walkSpeed, rb.velocity.y, 0);
+            }
+            if (rb.velocity.x > 0)
+            {
+                transform.rotation = StartEularAngles;
+                PlayAnimation("IsMoving");
+            }
+            else if (rb.velocity.x < 0)
+            {
+                transform.rotation = Quaternion.Inverse(StartEularAngles);
+                PlayAnimation("IsMoving");
+            }
+            else
+            {
+                StopAnimation("IsMoving");
+            }
+            if (grounded)
+            {
+                StopAnimation("IsJumping");
+                StopAnimation("IsWallSliding");
+                PlayAnimation("IsGrounded");
+                //resets jump counters when on ground
+                if (jumpsDone != amountOfJumps)
+                    jumpsDone = amountOfJumps;
+            }
+            else
+            {
+                StopAnimation("IsGrounded");
+                PlayAnimation("IsJumping");
+                WallSlide();
+                WallJump();
+            }
+            if (!isWallSliding)
+            {
+                if (isShooting > .2f) //Shooting ON 
+                {
+                    PlayAnimation("IsShooting");
+                    if (shootTimer <= 0)
+                    {
+                        if (!currentWeapon.GetComponent<Weapon>().On)
+                            currentWeapon.GetComponent<Weapon>().Attack();
+                        //SpawnBullet
+                        shootTimer = fireRate;
+                        shootAnimTimer = 1f;
+                        audioManager.playFlamethrower();
+                    }
+                }
+                else //Shooting Off
+                {
+                    currentWeapon.GetComponent<Weapon>().AttackOff();
+                    shootAnimTimer -= Time.deltaTime;
+                    StopAnimation("IsShooting");
+                    audioManager.stopFlamethrower();
+                }
+            }
         }
         else
         {
-            StopAnimation("IsGrounded");
-            PlayAnimation("IsJumping");
-            WallSlide();
-            WallJump();
-        }  
-        if(!isWallSliding)
-        {
-            if (isShooting > .2f) //Shooting ON 
-            {
-                PlayAnimation("IsShooting");
-                if (shootTimer <= 0)
-                {
-                    if (!currentWeapon.GetComponent<Weapon>().On)
-                        currentWeapon.GetComponent<Weapon>().Attack();
-                    //SpawnBullet
-                    shootTimer = fireRate;
-                    shootAnimTimer = 1f;
-                    audioManager.playFlamethrower();
-                }
-            }
-            else //Shooting Off
+            StopAnimation("IsMoving");
+            if (isShooting > .2f)
             {
                 currentWeapon.GetComponent<Weapon>().AttackOff();
-                shootAnimTimer -= Time.deltaTime;
-                StopAnimation("IsShooting");
                 audioManager.stopFlamethrower();
-            }
+                StopAnimation("IsShooting");
+            }      
+            rb.velocity = Vector3.zero;
         }
         if (justjumpedTimer > 0)
             justjumpedTimer -= Time.deltaTime;
@@ -174,6 +190,7 @@ public class PlayerController : MonoBehaviour, IDamageble
     public void Respawn()
     {
         transform.position = new Vector3(respawnPoint.x,respawnPoint.y,transform.position.z);
+        rb.velocity = Vector3.zero;
         health = maxHealth;
         if (bar != null)
             bar.SetHealth(Health);
@@ -187,7 +204,7 @@ public class PlayerController : MonoBehaviour, IDamageble
     #region ButtonPresses
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (context.performed && !gameManager.isPaused)
         {
             if (isWallSliding)
             {
@@ -232,44 +249,6 @@ public class PlayerController : MonoBehaviour, IDamageble
         if (context.performed)
         {
             gameManager.Pause();
-        }
-    }
-    public void OnSwitch(InputAction.CallbackContext context)
-    {
-        if (context.performed)
-        {
-            //uncomment this later
-
-            //Vector2 temp = actions.Actions.OnSwitch.ReadValue<Vector2>();
-            //if (temp.x > 0)
-            //{
-            //    switchWeapon(0);
-            //    return;
-            //}
-            //if (temp.x < 0)
-            //{
-            //    switchWeapon(1);
-            //    return;
-            //}
-            //if (temp.y > 0)
-            //{
-            //    switchWeapon(2);
-            //    return;
-            //}
-            //if (temp.y < 0)
-            //{
-            //    switchWeapon(3);
-            //    return;
-            //}
-        }
-    }
-    void switchWeapon(int num)
-    {
-        if (currentWeapon != weapons[num] && weapons[num] != null)
-        {
-            GameObject temp = Instantiate(weapons[num], currentWeapon.transform.position, currentWeapon.transform.rotation, gameObject.transform);
-            Destroy(currentWeapon);
-            currentWeapon = temp;
         }
     }
     #endregion

@@ -15,7 +15,6 @@ public class Projectile : MonoBehaviour
 
     private void Start()
     {
-        print("happened");
         //sets the rigidbody
         rb = GetComponent<Rigidbody>();
         rb.useGravity = useGravity;
