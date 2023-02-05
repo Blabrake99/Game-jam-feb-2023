@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class MovingPlatform : MonoBehaviour
 {
-    [SerializeField] Vector2 moveDistance;
+    [SerializeField] Vector3 moveDistance;
     [SerializeField] float speed = 2f;
-    Vector2 startPos, EndPos;
+    Vector3 startPos, EndPos;
     bool towardsEndPos = true;
     List<Rigidbody> rigidbodies = new List<Rigidbody>();
     Transform _transform;

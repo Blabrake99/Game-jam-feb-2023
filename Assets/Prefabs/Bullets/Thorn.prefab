@@ -103,7 +103,7 @@ MonoBehaviour:
   projectileDuration: 2
   useGravity: 0
   playerBullet: 0
-  dir: 1
+  dir: 2
 --- !u!65 &3597320759361361010
 BoxCollider:
   m_ObjectHideFlags: 0

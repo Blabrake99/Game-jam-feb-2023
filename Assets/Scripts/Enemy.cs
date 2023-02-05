@@ -30,8 +30,8 @@ public class Enemy : MonoBehaviour, IDamageble
     float hopSpeed = 2f;
     bool goingUp = true;
 
-    [SerializeField] Vector2 moveDistance;
-    Vector2 startPos, EndPos;
+    [SerializeField] Vector3 moveDistance;
+    Vector3 startPos, EndPos;
     List<Rigidbody> rigidbodies = new List<Rigidbody>();
     Transform _transform;
     Vector3 lastPos;
@@ -40,7 +40,7 @@ public class Enemy : MonoBehaviour, IDamageble
     {
         PATROL,
         SITTING,
-        HOP
+        HOP,
     }
     
     // projectile variables
