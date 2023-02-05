@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public bool isPaused;
     public void Pause()
     {
         GameObject menu = GameObject.FindGameObjectWithTag("PauseMenu");
         if (menu != null)
         {
             menu.transform.GetChild(0).gameObject.SetActive(!menu.transform.GetChild(0).gameObject.activeSelf);
+            isPaused = !isPaused;
         }
     }
 }
