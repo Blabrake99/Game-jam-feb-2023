@@ -115,7 +115,6 @@ public class PlayerController : MonoBehaviour, IDamageble
                 if(!currentWeapon.GetComponent<Weapon>().On)
                     currentWeapon.GetComponent<Weapon>().Attack();
                 //SpawnBullet
-                Instantiate(projectile, gunTip.position, transform.rotation);
                 shootTimer = fireRate;
                 shootAnimTimer = 1f;
             }

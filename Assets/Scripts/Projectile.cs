@@ -15,6 +15,7 @@ public class Projectile : MonoBehaviour
 
     private void Start()
     {
+        print("happened");
         //sets the rigidbody
         rb = GetComponent<Rigidbody>();
         rb.useGravity = useGravity;
@@ -68,6 +69,35 @@ public class Projectile : MonoBehaviour
             //this is if the bullet hits a wall
             Destroy(this.gameObject);
         }    
+    }
+    private void OnTriggerStay(Collider col)
+    {
+        IDamageble hit = col.GetComponent<IDamageble>();
+        if (col.isTrigger)
+        {
+            Physics.IgnoreCollision(GetComponent<Collider>(), col);
+            return;
+        }
+        if (hit != null)
+        {
+            //if a player bullet hits an enemy do damage
+            if (playerBullet && col.tag == "Enemy")
+            {
+                hit.Damage(damage);
+                Destroy(this.gameObject);
+            }
+            //if a enemy bullet hits an player do damage
+            if (!playerBullet && col.tag == "Player")
+            {
+                hit.Damage(damage);
+                Destroy(this.gameObject);
+            }
+        }
+        if (hit == null)
+        {
+            //this is if the bullet hits a wall
+            Destroy(this.gameObject);
+        }
     }
     enum Direction
     {
