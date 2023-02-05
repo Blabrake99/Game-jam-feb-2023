@@ -4,25 +4,17 @@ using UnityEngine;
 
 public class FlameThrower : MonoBehaviour, Weapon
 {
-    [SerializeField, Tooltip("Gun Tip of Gun")] Transform gunTip;
-    [SerializeField, Tooltip("Bullet particle effects")] ParticleSystem flame;
-    [SerializeField, Tooltip("Flame duration")] float flameDuration = .2f;
-    private float duration;
-    private bool flameOn;
+    [Tooltip("Bullet particle effects")] public ParticleSystem flame;
+
+    bool Weapon.On { get { return on; } set { on = value; } }
+
+    public bool on; 
     public void Attack()
     {
-        duration += flameDuration;
-        if (!flameOn)
-        {
-            flameOn = true;
-            StartCoroutine(FireFlame());
-        }
-    }
-    IEnumerator FireFlame()
-    {
         flame.Play();
-        yield return new WaitForSeconds(duration);
+    }
+    public void AttackOff()
+    {
         flame.Stop();
-        flameOn = false;
     }
 }
