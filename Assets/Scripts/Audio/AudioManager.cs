@@ -131,11 +131,12 @@ public class AudioManager : MonoBehaviour
 
     public void playGoingSomewhere()
     {
-        if(currentBGM != null)
+        AudioSource song = GoingSomewhere.GetComponent<AudioSource>();
+
+        if (currentBGM != null && currentBGM != song)
         {
             currentBGM.Stop();
         }
-        AudioSource song = GoingSomewhere.GetComponent<AudioSource>();
         if (song.isPlaying)
             return;
         song.loop = true;
@@ -169,11 +170,12 @@ public class AudioManager : MonoBehaviour
 
     public void playBossTheme()
     {
-        if (currentBGM != null)
+        AudioSource boss = BossCPU.GetComponent<AudioSource>();
+        if (currentBGM != null && currentBGM != boss)
         {
             currentBGM.Stop();
         }
-        AudioSource boss = BossCPU.GetComponent<AudioSource>();
+      
 
         if (boss.isPlaying)
             return;
