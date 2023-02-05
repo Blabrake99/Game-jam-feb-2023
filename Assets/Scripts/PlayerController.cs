@@ -106,26 +106,29 @@ public class PlayerController : MonoBehaviour, IDamageble
             PlayAnimation("IsJumping");
             WallSlide();
             WallJump();
-        }       
-        if(isShooting > .2f) //Shooting ON 
+        }  
+        if(!isWallSliding)
         {
-            PlayAnimation("IsShooting");
-            if (shootTimer <= 0)
+            if (isShooting > .2f) //Shooting ON 
             {
-                if(!currentWeapon.GetComponent<Weapon>().On)
-                    currentWeapon.GetComponent<Weapon>().Attack();
-                //SpawnBullet
-                shootTimer = fireRate;
-                shootAnimTimer = 1f;
-                audioManager.playFlamethrower();
+                PlayAnimation("IsShooting");
+                if (shootTimer <= 0)
+                {
+                    if (!currentWeapon.GetComponent<Weapon>().On)
+                        currentWeapon.GetComponent<Weapon>().Attack();
+                    //SpawnBullet
+                    shootTimer = fireRate;
+                    shootAnimTimer = 1f;
+                    audioManager.playFlamethrower();
+                }
             }
-        }
-        else //Shooting Off
-        {
-            currentWeapon.GetComponent<Weapon>().AttackOff();
-            shootAnimTimer -= Time.deltaTime;
-            StopAnimation("IsShooting");
-            audioManager.stopFlamethrower();
+            else //Shooting Off
+            {
+                currentWeapon.GetComponent<Weapon>().AttackOff();
+                shootAnimTimer -= Time.deltaTime;
+                StopAnimation("IsShooting");
+                audioManager.stopFlamethrower();
+            }
         }
         if (justjumpedTimer > 0)
             justjumpedTimer -= Time.deltaTime;

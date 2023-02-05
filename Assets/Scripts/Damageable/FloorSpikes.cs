@@ -16,7 +16,10 @@ public class FloorSpikes : MonoBehaviour
     void repositionAtPoint(GameObject player) 
     {
         if (currentPoint != null)
-            player.transform.position = currentPoint.transform.position;
+        {
+            if(player.GetComponent<PlayerController>().Health > 0)
+                player.transform.position = currentPoint.transform.position;
+        }
         else
             player.GetComponent<PlayerController>().Respawn();
     }
