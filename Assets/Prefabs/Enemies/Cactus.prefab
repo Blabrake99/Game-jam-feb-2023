@@ -356,7 +356,7 @@ MonoBehaviour:
   health: 5
   shootCD: 1
   type: 1
-  projectile: {fileID: 919132149155446097, guid: b96d663096665bd47aae905efed34c58, type: 3}
+  projectile: {fileID: 5025264798874445703, guid: ced1ed6ac1ce28b4d80f53f4af98d4d3, type: 3}
   shootbox: {fileID: 2568877904365335736}
 --- !u!1 &3950317465415660530
 GameObject:
