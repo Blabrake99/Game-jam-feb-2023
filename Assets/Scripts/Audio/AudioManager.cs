@@ -38,6 +38,8 @@ public class AudioManager : MonoBehaviour
     [Header("-----------------------------------------------------------------------------------------------------")]
     [SerializeField] GameObject CoolCPU;
     [SerializeField] GameObject GoingSomewhere;
+    [SerializeField] GameObject BossCPU;
+
 
     #endregion
     private void Awake()
@@ -154,6 +156,15 @@ public class AudioManager : MonoBehaviour
         AudioSource flame = this.flamerthrower.GetComponent<AudioSource>();
         flame.loop = true;
         flame.Stop();
+    }
+
+    public void playBossTheme()
+    {
+        AudioSource song = GoingSomewhere.GetComponent<AudioSource>();
+        song.Stop();
+        AudioSource boss = BossCPU.GetComponent<AudioSource>();
+        boss.loop = true;
+        boss.Play();
     }
     #endregion
 
