@@ -5,6 +5,6 @@ public class WinScript : MonoBehaviour
 {
     private void OnTriggerEnter(Collider col)
     {
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(2); 
     }
 }
