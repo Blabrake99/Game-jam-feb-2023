@@ -17,8 +17,11 @@ public class FloorSpikes : MonoBehaviour
     {
         if (currentPoint != null)
         {
-            if(player.GetComponent<PlayerController>().Health > 0)
-                player.transform.position = currentPoint.transform.position;
+            if (player.GetComponent<PlayerController>().Health > 0)
+            {
+                player.transform.position = new Vector3(currentPoint.transform.position.x,
+                    currentPoint.transform.position.y, player.transform.position.z);
+            }
         }
         else
             player.GetComponent<PlayerController>().Respawn();

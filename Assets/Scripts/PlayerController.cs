@@ -173,7 +173,7 @@ public class PlayerController : MonoBehaviour, IDamageble
     }
     public void Respawn()
     {
-        transform.position = respawnPoint;
+        transform.position = new Vector3(respawnPoint.x,respawnPoint.y,transform.position.z);
         health = maxHealth;
         if (bar != null)
             bar.SetHealth(Health);
