@@ -14,6 +14,9 @@ public class Enemy : MonoBehaviour, IDamageble
     public int Health { get { return health; } set { health = value; } }
 
     [SerializeField]
+   private float range;
+
+    [SerializeField]
     private float shootCD;
 
     public enum EnemyType
@@ -55,11 +58,11 @@ public class Enemy : MonoBehaviour, IDamageble
         switch (type)
         {
             case EnemyType.PATROL:
-        if (distanceFromPlayer <= 7)
+        if (distanceFromPlayer <= range)
         {
             agent.SetDestination(player.transform.position);
         }
-        else if (distanceFromPlayer > 7)
+        else if (distanceFromPlayer > range)
         {
             ChangeDestination();
         }
