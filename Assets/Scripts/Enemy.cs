@@ -5,9 +5,13 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour, IDamageble
 {
+
+    // variables for patrolling enemy
     private NavMeshAgent agent;
     [SerializeField] List<Transform> waypoints;
     int waypointIndex;
+   
+    // variables for all enemies
     public GameObject player;
     Animator anim;
     [SerializeField] int health = 5;
@@ -16,15 +20,30 @@ public class Enemy : MonoBehaviour, IDamageble
     [SerializeField]
    private float range;
 
+
+    // variables for stationary enemy
     [SerializeField]
     private float shootCD;
+
+    // variables for hopping enemies
+    [SerializeField]
+    float hopSpeed = 2f;
+    bool goingUp = true;
+
+    [SerializeField] Vector2 moveDistance;
+    Vector2 startPos, EndPos;
+    List<Rigidbody> rigidbodies = new List<Rigidbody>();
+    Transform _transform;
+    Vector3 lastPos;
 
     public enum EnemyType
     {
         PATROL,
         SITTING,
+        HOP
     }
     
+    // projectile variables
     [SerializeField]
     EnemyType type;
     [SerializeField]
@@ -37,6 +56,11 @@ public class Enemy : MonoBehaviour, IDamageble
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindGameObjectWithTag("Player");
+
+        _transform = transform;
+        startPos = _transform.position;
+        lastPos = _transform.position;
+        EndPos = startPos + moveDistance;
 
         switch (type)
         {
@@ -83,6 +107,39 @@ public class Enemy : MonoBehaviour, IDamageble
                     }
                 }
 
+                break;
+            case EnemyType.HOP:
+                float step = hopSpeed * Time.deltaTime;
+                if (goingUp)
+                {
+                    _transform.position = Vector3.MoveTowards(_transform.position, EndPos, step);
+                    if (Vector3.Distance(_transform.position, EndPos) < 0.1f)
+                    {
+                        goingUp = false;
+                    }
+                }
+                else
+                {
+                    _transform.position = Vector3.MoveTowards(_transform.position, startPos, step);
+                    if (Vector3.Distance(_transform.position, startPos) < 0.1f)
+                    {
+                        goingUp = true;
+                    }
+                }
+                if (rigidbodies.Count > 0)
+                {
+                    for (int i = 0; i < rigidbodies.Count; i++)
+                    {
+                        if (rigidbodies[i] != null)
+                        {
+                            Rigidbody rb = rigidbodies[i];
+                            Vector2 vel = new Vector2((_transform.position.x - lastPos.x) + ((rb.velocity.x * Time.deltaTime) / 2),
+                                                      (_transform.position.y - lastPos.y) + ((rb.velocity.y * Time.deltaTime) / 2));
+                            rb.transform.Translate(vel, transform);
+                        }
+                    }
+                }
+                lastPos = _transform.position;
                 break;
         }
 
