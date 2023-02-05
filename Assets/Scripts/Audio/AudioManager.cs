@@ -16,41 +16,13 @@ public class AudioManager : MonoBehaviour
     private const string sfxVol = "SFXVol";
     private const string masterVol = "MasterVol";
 
-
-    [Header("-----------------------------------------------------------------------------------------------------")]
-    [Header("Filters")]
-    [Header("-----------------------------------------------------------------------------------------------------")]
-    [SerializeField]
-    [Tooltip("The length of the transition to and from water")]
-    float waterTimeout = 0.3f;
-    [SerializeField]
-    [Tooltip("The Filter for the underwater section")]
-    AudioMixerSnapshot underwater;
-    [SerializeField]
-    [Tooltip("The default filter section")]
-    AudioMixerSnapshot normal;
-    [SerializeField]
-    [Tooltip("The Filter for the Pause menu")]
-    AudioMixerSnapshot pauseFilter;
-    [SerializeField]
-    [Tooltip("The length of the transition to and from pauseMenu")]
-    float pauseTimeout = 0.3f;
-
     #region SFX
     [Header("-----------------------------------------------------------------------------------------------------")]
     [Header("OneShots")]
     [Header("-----------------------------------------------------------------------------------------------------")]
     [SerializeField] GameObject jump;
-    [SerializeField] GameObject box_break;
-    [SerializeField] GameObject coin_get;
-    [SerializeField] GameObject thud;
 
-    [Header("-----------------------------------------------------------------------------------------------------")]
-    [Header("State Based SFX")]
-    [Header("-----------------------------------------------------------------------------------------------------")]
 
-    [SerializeField] GameObject move_obj;
-    [SerializeField] GameObject wall_slide;
     #endregion
 
     [Header("-----------------------------------------------------------------------------------------------------")]
@@ -58,12 +30,13 @@ public class AudioManager : MonoBehaviour
     [Header("-----------------------------------------------------------------------------------------------------")]
 
     #region Ambience
-    [SerializeField] GameObject ocean;
+    [SerializeField] GameObject RustlingLeaves;
 
     [Header("-----------------------------------------------------------------------------------------------------")]
     [Header("Music")]
     [Header("-----------------------------------------------------------------------------------------------------")]
     [SerializeField] GameObject CoolCPU;
+    [SerializeField] GameObject GoingSomewhere;
 
     #endregion
     private void Awake()
@@ -73,8 +46,6 @@ public class AudioManager : MonoBehaviour
 
         AudioMixer mixer = Resources.Load("Mixer") as AudioMixer;
 
-        if (normal != null)
-            normal.TransitionTo(0.1f);
 
         if (mixer != null)
         {
@@ -82,8 +53,8 @@ public class AudioManager : MonoBehaviour
             sfx = mixer.FindMatchingGroups("SFX")[0];
             music = mixer.FindMatchingGroups("BGM")[0];
             master = mixer.FindMatchingGroups("Master")[0];
-           
-            
+
+
 
         }
         else
@@ -147,66 +118,30 @@ public class AudioManager : MonoBehaviour
 
     #endregion
 
-    #region ONE_SHOTS
+    #region play_functions
     public void playJump()
     {
         jump.GetComponent<AudioSource>().Play();
     }
 
-    #endregion
-
-    #region ONE_SHOTS_IN_WORLDSPACE
-
-    public void playJump(Vector3 world_point)
+    public void playGoingSomewhere()
     {
-        var obj = Instantiate(jump);
-        obj.transform.position = world_point;
+        AudioSource song = GoingSomewhere.GetComponent<AudioSource>();
+        song.loop = true;
+        song.Play();
     }
 
-    public void playBoxBreak(Vector3 world_point)
-    {
-        var obj = Instantiate(box_break);
-        obj.transform.position = world_point;
-    }
 
-    public void playThud(Vector3 world_point)
+    public void playWindLeaves()
     {
-        var obj = Instantiate(thud);
-        obj.transform.position = world_point;
-    }
-
-    public void playCoin(Vector3 world_point)
-    {
-        var obj = Instantiate(coin_get);
-        obj.transform.position = world_point;
+        AudioSource song = RustlingLeaves.GetComponent<AudioSource>();
+        song.loop = true;
+        song.Play();
     }
     #endregion
-
-    #region FILTER_TRANSITIONS
-
-    public void to_underwater()
-    {
-        underwater.TransitionTo(waterTimeout);
-    }
-
-    public void to_normal_from_water()
-    {
-        normal.TransitionTo(waterTimeout);
-    }
-
-    public void to_pause_menu()
-    {
-        pauseFilter.TransitionTo(pauseTimeout);
-    }
-
-    public void to_normal_from_pause()
-    {
-        normal.TransitionTo(pauseTimeout);
-    }
-
-    #endregion
-
-
 
 
 }
+
+
+
