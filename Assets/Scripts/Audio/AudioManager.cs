@@ -21,6 +21,7 @@ public class AudioManager : MonoBehaviour
     [Header("OneShots")]
     [Header("-----------------------------------------------------------------------------------------------------")]
     [SerializeField] GameObject jump;
+    [SerializeField] GameObject flamerthrower;
 
 
     #endregion
@@ -138,8 +139,23 @@ public class AudioManager : MonoBehaviour
         song.loop = true;
         song.Play();
     }
+
+    public void playFlamethrower()
+    {
+        AudioSource flame = this.flamerthrower.GetComponent<AudioSource>();
+        flame.loop = true;
+        flame.Play();
+    }
+
+    public void stopFlamethrower()
+    {
+        AudioSource flame = this.flamerthrower.GetComponent<AudioSource>();
+        flame.loop = true;
+        flame.Stop();
+    }
     #endregion
 
+}
 
 }
 
