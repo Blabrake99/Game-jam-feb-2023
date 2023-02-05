@@ -2290,6 +2290,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3422608833860740602, guid: 4800e730a8d1bc64fa46619cd34e3c66, type: 3}
+      propertyPath: m_Mass
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 3422608833860740605, guid: 4800e730a8d1bc64fa46619cd34e3c66, type: 3}
       propertyPath: m_AutoBraking
       value: 1
@@ -2313,11 +2317,11 @@ PrefabInstance:
     - target: {fileID: 3422608833860740606, guid: 4800e730a8d1bc64fa46619cd34e3c66, type: 3}
       propertyPath: waypoints.Array.data[0]
       value: 
-      objectReference: {fileID: 1541021174}
+      objectReference: {fileID: 0}
     - target: {fileID: 3422608833860740606, guid: 4800e730a8d1bc64fa46619cd34e3c66, type: 3}
       propertyPath: waypoints.Array.data[1]
       value: 
-      objectReference: {fileID: 1617770297}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4800e730a8d1bc64fa46619cd34e3c66, type: 3}
 --- !u!4 &285670843 stripped
@@ -3585,6 +3589,14 @@ PrefabInstance:
     - target: {fileID: 534886661536001699, guid: 435f3de5f26f2de4ea33aabb1c40c567, type: 3}
       propertyPath: m_Name
       value: Potobushie
+      objectReference: {fileID: 0}
+    - target: {fileID: 841369680651195385, guid: 435f3de5f26f2de4ea33aabb1c40c567, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 841369680651195385, guid: 435f3de5f26f2de4ea33aabb1c40c567, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 875840422067500057, guid: 435f3de5f26f2de4ea33aabb1c40c567, type: 3}
       propertyPath: m_RootOrder
@@ -10817,9 +10829,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Potobushie (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 841369680651195385, guid: 435f3de5f26f2de4ea33aabb1c40c567, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 841369680651195385, guid: 435f3de5f26f2de4ea33aabb1c40c567, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 841369680651195388, guid: 435f3de5f26f2de4ea33aabb1c40c567, type: 3}
       propertyPath: hopSpeed
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 841369680651195388, guid: 435f3de5f26f2de4ea33aabb1c40c567, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 875840422067500057, guid: 435f3de5f26f2de4ea33aabb1c40c567, type: 3}
       propertyPath: m_RootOrder
@@ -12065,6 +12089,10 @@ PrefabInstance:
     - target: {fileID: 2951324387365569051, guid: 4800e730a8d1bc64fa46619cd34e3c66, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3422608833860740602, guid: 4800e730a8d1bc64fa46619cd34e3c66, type: 3}
+      propertyPath: m_Mass
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 3422608833860740603, guid: 4800e730a8d1bc64fa46619cd34e3c66, type: 3}
       propertyPath: m_Size.y
@@ -13632,6 +13660,10 @@ PrefabInstance:
     - target: {fileID: 534886661536001699, guid: 435f3de5f26f2de4ea33aabb1c40c567, type: 3}
       propertyPath: m_Name
       value: Potobushie (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 841369680651195385, guid: 435f3de5f26f2de4ea33aabb1c40c567, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 841369680651195388, guid: 435f3de5f26f2de4ea33aabb1c40c567, type: 3}
       propertyPath: hopSpeed
