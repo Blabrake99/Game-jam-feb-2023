@@ -81,7 +81,7 @@ MonoBehaviour:
   wallSlidingSpeed: 0.4
   wallJumpPower: {x: 5, y: 5}
   wallJumpingDuration: 0.5
-  fireRate: 0.002
+  fireRate: 0.1
   projectile: {fileID: 1235826696118096243, guid: 1e6a208773197cc4c8b8c864933b6e46, type: 3}
   weapons:
   - {fileID: 0}
@@ -96,6 +96,10 @@ MonoBehaviour:
     m_Bits: 72
   wallCheck: {fileID: 7819809848746271597}
   gunTip: {fileID: 216217208455621256}
+  groundedPoint: {fileID: 8341881914848534806}
+  mask:
+    serializedVersion: 2
+    m_Bits: 73
 --- !u!54 &119710896081172944
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -166,8 +170,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.6160629, y: 0.9737668, z: 0.61333686}
-  m_Center: {x: 0.069067836, y: 0.52334595, z: 0.03693226}
+  m_Size: {x: 0.6160629, y: 1.0270615, z: 0.61333686}
+  m_Center: {x: 0.069067836, y: 0.49669862, z: 0.03693226}
 --- !u!1 &159556007376088880
 GameObject:
   m_ObjectHideFlags: 0

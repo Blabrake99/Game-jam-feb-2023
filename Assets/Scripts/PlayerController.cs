@@ -27,6 +27,8 @@ public class PlayerController : MonoBehaviour, IDamageble
     [SerializeField] private LayerMask wallLayer;
     [SerializeField] private Transform wallCheck;
     [SerializeField, Tooltip("The tip of the gun")] Transform gunTip;
+    [SerializeField, Tooltip("Grounded Point")] Transform groundedPoint;
+    [SerializeField] LayerMask mask;
     public int Health { get { return health; } set { health = value; } }
     private int maxHealth;
     private GameManager gameManager;
@@ -48,6 +50,7 @@ public class PlayerController : MonoBehaviour, IDamageble
     private Quaternion StartEularAngles;
     private Animator anim;
     private float shootAnimTimer;
+    private float isShooting;
     void Start()
     { 
         rb = GetComponent<Rigidbody>();
@@ -60,7 +63,7 @@ public class PlayerController : MonoBehaviour, IDamageble
         actions = new PlayerActions();
         actions.Actions.Enable();
         actions.Actions.OnJump.performed += OnJump;
-        actions.Actions.OnFire.performed += OnFire;
+        //actions.Actions.OnFire.performed += OnFire;
         actions.Actions.OnPause.performed += OnPause;
         audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
         StartEularAngles = transform.rotation;
@@ -68,6 +71,7 @@ public class PlayerController : MonoBehaviour, IDamageble
     }
     private void FixedUpdate()
     {
+        isShooting = actions.Actions.OnFire.ReadValue<float>();
         //movement
         if (!isWallJumping)
         {
@@ -99,19 +103,32 @@ public class PlayerController : MonoBehaviour, IDamageble
         else
         {
             StopAnimation("IsGrounded");
+            PlayAnimation("IsJumping");
             WallSlide();
             WallJump();
+        }
+        if(isShooting > .2f)
+        {
+            PlayAnimation("IsShooting");
+            if (shootTimer <= 0)
+            {
+                //SpawnBullet
+                Instantiate(projectile, gunTip.position, transform.rotation);
+                shootTimer = fireRate;
+                shootAnimTimer = 1f;
+            }
+        }
+        else
+        {
+            shootAnimTimer -= Time.deltaTime;
+            StopAnimation("IsShooting");
         }
         if (justjumpedTimer > 0)
             justjumpedTimer -= Time.deltaTime;
         if (damagedTimer > 0)
             damagedTimer -= Time.deltaTime;
         if (shootTimer > 0)
-            shootTimer -= Time.deltaTime;
-        if (shootAnimTimer > 0)
-            shootAnimTimer -= Time.deltaTime;
-        else
-            StopAnimation("IsShooting");
+            shootTimer -= Time.deltaTime;            
     }
     #region Health
     public bool MaxHealth()
@@ -196,20 +213,13 @@ public class PlayerController : MonoBehaviour, IDamageble
             }
         }
     }
-    public void OnFire(InputAction.CallbackContext context)
-    {
-        if (context.performed)
-        {
-            if (shootTimer <= 0)
-            {
-                PlayAnimation("IsShooting");
-                //SpawnBullet
-                Instantiate(projectile, gunTip.position, transform.rotation);
-                shootTimer = fireRate;
-                shootAnimTimer = 1f;
-            }
-        }
-    }
+    //public void OnFire(InputAction.CallbackContext context)
+    //{
+    //    if (context.action.WasPressedThisFrame())
+    //    {
+
+    //    }
+    //}
     public void OnPause(InputAction.CallbackContext context)
     {
         if (context.performed)
@@ -320,7 +330,7 @@ public class PlayerController : MonoBehaviour, IDamageble
         if (justjumpedTimer > 0)
             return false;
         isWallSliding = false;
-        return Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.01f);
+        return Physics.Raycast(groundedPoint.transform.position, -Vector3.up, distToGround - .2f,mask,QueryTriggerInteraction.Ignore);
     }
     #endregion
 

@@ -47,12 +47,12 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""OnFire"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""416dd99b-81b9-44b4-856a-05cc7b62afed"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": ""Integer"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 },
                 {
                     ""name"": ""OnInteract"",

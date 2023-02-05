@@ -310,7 +310,7 @@ GameObject:
   - component: {fileID: 483184109}
   - component: {fileID: 483184108}
   - component: {fileID: 483184107}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -902,6 +902,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Full Heal
       objectReference: {fileID: 0}
+    - target: {fileID: 378931449567409888, guid: 84cbc9ede259bb54d826298a1aa22144, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 378931449567409892, guid: 84cbc9ede259bb54d826298a1aa22144, type: 3}
       propertyPath: m_RootOrder
       value: 16
@@ -1060,6 +1064,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Additional Jump Power up
       objectReference: {fileID: 0}
+    - target: {fileID: 6221534688913998820, guid: 5680427b1a9d68c4b82f8f1840682205, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5680427b1a9d68c4b82f8f1840682205, type: 3}
 --- !u!1001 &6827496245449368460
@@ -1117,6 +1125,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CheckPoint
       objectReference: {fileID: 0}
+    - target: {fileID: 6827496244710327051, guid: 748aba395b2e52d428aff44f6ffb9b4c, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 748aba395b2e52d428aff44f6ffb9b4c, type: 3}
 --- !u!4 &7378892217221460954 stripped
@@ -1131,9 +1143,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 119710896081172946, guid: aee3b9237238f754c99bc61bce697403, type: 3}
+      propertyPath: m_NotificationBehavior
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 119710896081172947, guid: aee3b9237238f754c99bc61bce697403, type: 3}
       propertyPath: m_Name
       value: ActualPlayer
+      objectReference: {fileID: 0}
+    - target: {fileID: 119710896081172949, guid: aee3b9237238f754c99bc61bce697403, type: 3}
+      propertyPath: m_Size.y
+      value: 1.0198848
+      objectReference: {fileID: 0}
+    - target: {fileID: 119710896081172949, guid: aee3b9237238f754c99bc61bce697403, type: 3}
+      propertyPath: m_Center.y
+      value: 0.50028694
       objectReference: {fileID: 0}
     - target: {fileID: 119710896081172951, guid: aee3b9237238f754c99bc61bce697403, type: 3}
       propertyPath: gunTip
@@ -1143,6 +1167,10 @@ PrefabInstance:
       propertyPath: projectile
       value: 
       objectReference: {fileID: 1235826696118096243, guid: 1e6a208773197cc4c8b8c864933b6e46, type: 3}
+    - target: {fileID: 119710896081172951, guid: aee3b9237238f754c99bc61bce697403, type: 3}
+      propertyPath: mask.m_Bits
+      value: 73
+      objectReference: {fileID: 0}
     - target: {fileID: 784361635276465001, guid: aee3b9237238f754c99bc61bce697403, type: 3}
       propertyPath: m_RootOrder
       value: 1
