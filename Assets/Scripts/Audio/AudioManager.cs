@@ -136,6 +136,8 @@ public class AudioManager : MonoBehaviour
             currentBGM.Stop();
         }
         AudioSource song = GoingSomewhere.GetComponent<AudioSource>();
+        if (song.isPlaying)
+            return;
         song.loop = true;
         song.Play();
         currentBGM = song;
@@ -172,6 +174,9 @@ public class AudioManager : MonoBehaviour
             currentBGM.Stop();
         }
         AudioSource boss = BossCPU.GetComponent<AudioSource>();
+
+        if (boss.isPlaying)
+            return;
         boss.loop = true;
         boss.Play();
         currentBGM = boss;
