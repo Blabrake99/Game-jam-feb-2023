@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SampleScene 1 - The pattening.unity
     guid: 6dd304731668ef24096fff154cd42a01
+  - enabled: 1
+    path: Assets/Scenes/WinScrene.unity
+    guid: ba2d6f01e8b96104cb15231427ac08f3
   m_configObjects: {}
