@@ -117,6 +117,7 @@ public class PlayerController : MonoBehaviour, IDamageble
                 //SpawnBullet
                 shootTimer = fireRate;
                 shootAnimTimer = 1f;
+                audioManager.playFlamethrower();
             }
         }
         else //Shooting Off
@@ -124,6 +125,7 @@ public class PlayerController : MonoBehaviour, IDamageble
             currentWeapon.GetComponent<Weapon>().AttackOff();
             shootAnimTimer -= Time.deltaTime;
             StopAnimation("IsShooting");
+            audioManager.stopFlamethrower();
         }
         if (justjumpedTimer > 0)
             justjumpedTimer -= Time.deltaTime;

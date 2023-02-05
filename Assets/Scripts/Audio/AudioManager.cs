@@ -141,8 +141,10 @@ public class AudioManager : MonoBehaviour
     }
 
     public void playFlamethrower()
-    {
+    { 
         AudioSource flame = this.flamerthrower.GetComponent<AudioSource>();
+        if (flame.isPlaying)
+            return;
         flame.loop = true;
         flame.Play();
     }
