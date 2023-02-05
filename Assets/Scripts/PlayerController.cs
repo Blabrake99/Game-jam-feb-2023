@@ -166,7 +166,7 @@ public class PlayerController : MonoBehaviour, IDamageble
             Respawn();
         }
     }
-    void Respawn()
+    public void Respawn()
     {
         transform.position = respawnPoint;
         health = maxHealth;
